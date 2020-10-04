@@ -23,7 +23,7 @@
             {{equation}}
           </md-card-header>
           <md-card-content>
-            <img alt="Vue logo" src="../assets/logo.png">
+            <img alt="Vue logo" v-bind:src="image">
           </md-card-content>
         </md-card>    
       </md-app-content>
@@ -49,12 +49,20 @@
         yIntercept: 0,
         slope: 1
       },
-       equation: "y = 1x + 0"
+       equation: "y = 1x + 0",
+       image: null
     }),
     methods: {
       print() {
-        this.equation = "y = " + this.form.slope + "x" + " + " + this.form.yIntercept   
-        console.log(this.equation)    
+        const baseURI = 'http://127.0.0.1:5000/graph'
+        this.$http.post(baseURI, {
+          slope: parseFloat(this.form.slope),
+          yIntercept: parseFloat(this.form.yIntercept)
+        }).then((response) => {
+          this.image = 'data:image/png;base64,' + response.data.image.substring(2, response.data.image.length - 1)
+        });
+        
+        this.equation = "y = " + this.form.slope + "x" + " + " + this.form.yIntercept    
       }
     }
   }
