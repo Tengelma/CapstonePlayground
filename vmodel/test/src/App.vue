@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Calculator/>
+    <parent/>
   </div>
 </template>
 
 <script>
-import Calculator from './components/Calculator.vue'
+import Parent from './components/Parent.vue'
 
 export default {
   name: 'App',
   components: {
-    Calculator
+    Parent,
   }
 }
 </script>
